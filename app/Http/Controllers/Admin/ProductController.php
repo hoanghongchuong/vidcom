@@ -6,6 +6,7 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Products;
+use App\Color;
 use App\Images;
 use App\ThuongHieu;
 use App\ProductCate;
@@ -25,8 +26,8 @@ class ProductController extends Controller
     {
         $data = Products::all();
         $parent = ProductCate::all();
-        // $thuonghieus = ThuongHieu::all();
-        return view('admin.product.add', compact('data','parent'));
+        $colors = Color::all();
+        return view('admin.product.add', compact('data','parent', 'colors'));
     }
     public function postAdd(ProductRequest $request)
     {
@@ -100,11 +101,13 @@ class ProductController extends Controller
         if(!empty($request->properties)){
             $product->properties = implode('###',$request->properties);
         }
+        $product->color_id = implode(',', $request->colors);
+        
         //     if(isset($_POST['number'])){
         //     $number = $_POST['number'];
         //     $product->number_id = implode(',', $number);
         // }
-         
+        // dd($product) ;
         $product->save();
         $product_id = $product->id;
         if ($request->hasFile('detailImg')) {
@@ -119,7 +122,6 @@ class ProductController extends Controller
             }
         }
         return redirect()->route('admin.product.index')->with('status','Thêm mới thành công !');
-
         /*
         echo 'Tên hinh:'.$request->file('fImages')->getClientOriginalName();
         echo 'Kích thước:'.$request->file('fImages')->getSize();
@@ -138,8 +140,8 @@ class ProductController extends Controller
         $id= $request->get('id');
         //Tìm article thông qua mã id tương ứng
         //$data = Products::findOrFail($id);
-        $data = Products::find($id);
-       
+        $colors = Color::all();
+        $data = Products::find($id);       
         if(!empty($data)){
             if($request->get('hienthi')>0){
                 if($data->status == 1){
@@ -171,8 +173,10 @@ class ProductController extends Controller
             $parent = ProductCate::orderBy('stt', 'asc')->get()->toArray();
             $product = Products::select('stt')->orderBy('id','asc')->get()->toArray();
             $product_img = Products::find($id)->pimg;
+            $color_product = explode(',', $data->color_id);
+            // dd($color_product);
             // Gọi view edit.blade.php hiển thị bải viết
-            return view('admin.product.edit',compact('data','product','id','parent','product_img'));
+            return view('admin.product.edit',compact('data','product','id','parent','product_img','colors', 'color_product'));
         }else{
             $data = Products::all();
             $parent = ProductCate::orderBy('stt', 'asc')->get()->toArray();
@@ -254,6 +258,10 @@ class ProductController extends Controller
             $product->content = $request->txtContent;
             $product->keyword = $request->txtKeyword;
             $product->description = $request->txtDescription;
+
+            $product->color_id = implode(',', $request->colors);
+            $product->stt = intval($request->stt);
+
             if($request->status=='on'){
                 $product->status = 1;
             }else{
@@ -277,7 +285,7 @@ class ProductController extends Controller
             $product->user_id       = Auth::user()->id;
 
             $product->save();
-            return redirect()->route('admin.product.index')->with('status','Cập nhật thành công !');
+            return redirect()->back()->with('status','Cập nhật thành công !');
             //return redirect('admin/product/edit?id='.$id)->with('status','Cập nhật thành công');
         }else{
             return redirect('backend/product/')->with('status','Dữ liệu không có thực');
@@ -330,42 +338,5 @@ class ProductController extends Controller
             return 'OK';
         }
     }
-    // public function dropzoneStore(Request $request)
-    // {
-    //     $image = $request->file('file');
-    //     $imageName = time().$image->getClientOriginalName();
-    //     $image->move(public_path('upload/hinhanh'),$imageName);
-    //     return response()->json(['success'=>$imageName]);
-    // }
-    // public function addAlbum($id){
-
-    //     $file_name=fns_Rand_digit(0,9,6);
-    //     $allowed = array('png', 'jpg', 'gif');
-    //     $path_img='upload/hinhanh';
-    //     $hinhanh = new Images;
-
-    //     if(isset($_FILES['upl']) && $_FILES['upl']['error'] == 0){
-
-    //         $extension = pathinfo($_FILES['upl']['name'], PATHINFO_EXTENSION);
-    //         if(!in_array(strtolower($extension), $allowed)){
-    //             echo '{"status":"error"}';
-    //             exit;
-    //         }
-    //         if(move_uploaded_file($_FILES['upl']['tmp_name'], $path_img.$file_name."_".$_FILES['upl']['name'])){
-    //             // $hinhanh->photo = $file_name."_".$_FILES['upl']['name'];
-                  
-    //             // $hinhanh->product_id = $id;
-    //             // $hinhanh->status = 1;
-
-    //             // if($hinhanh->save()) {
-    //             //     echo '{"status":"error"}';
-    //             //     exit;
-    //             // }else{
-    //             //     echo '{"status":"success"}';
-    //             //     exit;
-    //             // }
-                
-    //         }
-    //     }
-    // }
+   
 }

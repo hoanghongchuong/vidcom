@@ -127,13 +127,19 @@ Route::group(['middleware' =>'authen', 'prefix' => 'backend'], function(){
 		Route::get('{id}/delete',['as'=>'admin.product.getDelete','uses'=>'Admin\ProductController@getDelete']);
 		
 		Route::get('{id}/deleteList',['as'=>'admin.product.getDeleteList','uses'=>'Admin\ProductController@getDeleteList']);
-		Route::get('{id}/addAlbum',['as'=>'admin.product.addAlbum','uses'=>'Admin\ProductController@addAlbum']);
-		
+		Route::get('{id}/addAlbum',['as'=>'admin.product.addAlbum','uses'=>'Admin\ProductController@addAlbum']);		
 	});
 
-
+	Route::group(['prefix' => 'color'], function(){
+		Route::get('/', 'Admin\ColorController@index')->name('admin.color.index');
+		Route::get('create', 'Admin\ColorController@getCreate')->name('admin.color.getCreate');
+		Route::post('create', 'Admin\ColorController@postCreate')->name('admin.color.postCreate');
+		Route::get('edit/{id}','Admin\ColorController@getEdit')->name('admin.color.getEdit');
+		Route::post('edit/{id}','Admin\ColorController@postEdit')->name('admin.color.postEdit');
+		Route::get('delete/{id}', 'Admin\ColorController@delete')->name('admin.color.delete');
+	});
 	
-		Route::group(['prefix' => 'orders'], function(){
+	Route::group(['prefix' => 'orders'], function(){
 		Route::get('/',['as'=>'admin.bill.index','uses'=>'Admin\BillController@getList']);
 		// Route::get('add',['as'=>'admin.obill.getAdd','uses'=>'Admin\BillController@getAdd']);
 		// Route::post('postAdd',['as'=>'admin.obill.postAdd','uses'=>'Admin\OBillController@postAdd']);

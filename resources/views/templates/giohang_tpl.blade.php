@@ -3,88 +3,122 @@
 <?php
     $setting = Cache::get('setting');
 ?>
-<div class="my-a-w-title">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="a-w-title">
-                    <h1>Giỏ hàng</h1>
+<section class="vk-content">
+    <div class="vk-breadcrumb">
+        <nav class="container">
+            <ul class="vk-list vk-list--inline vk-breadcrumb__list">
+                <li class="vk-list__item"><a href="index.html"><i class="vk-icon fa fa-home"></i> Trang chủ</a></li>
+
+                <li class="vk-list__item active">Giỏ hàng</li>
+            </ul>
+        </nav>
+    </div>
+    <!--./vk-breadcrumb-->
+    <div class="vk-page vk-page--shopcart">
+        <div class="vk-shopcart">
+        <form action="{{route('updateCart')}}" method="post" id="cartformpage">   
+                    <input type="hidden" name="_token" value="{{csrf_token()}}" > 
+            <div class="container">
+                <h1 class="vk-shopcart__heading text-uppercase vk-heading--style-1">Giỏ hàng</h1>
+
+                <table class="vk-table vk-shopcart__table">
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Giá bán</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    @foreach($product_cart as $key=>$item)
+                    <tr>
+                        <td>
+                            <div class="vk-shopcart-item">
+                                <a href="shop-details.html" title="" class="vk-img vk-img--mw100">
+                                    <img src="{{asset('upload/product/'.$item->options->photo)}}" alt="" class="vk-img__img">
+                                </a>
+                                <div class="vk-shopcart-item__brief">
+                                    <h3 class="vk-shopcart-item__title"><a href="#" title="">{{$item->name}}</a></h3>
+                                    <div class="vk-shopcart-item__color color-cart">
+                                    <?php $color = DB::table('colors')->where('id', $item->options->color)->first(); ?>
+                                        <!-- <span>Màu sắc </span> -->
+                                        <span style="background: {{ $color->code }}; width: 30px; height: 30px; border-radius: 50%"></span>
+                                    </div>
+                                </div>
+                            </div> <!--./vk-shopcart-item-->
+                        </td>
+                        <td>
+                        <span class="vk-shopcart__price vk-text--red-1"><span
+                                class="d-lg-none">Giá: </span>{{ number_format($item->price) }} đ</span>
+                        </td>
+                        <td>
+                            <div class="vk-shopcart__quantity">
+                                <span class="d-lg-none d-block">Số lượng: </span>
+                                <div class="vk-calculator" data-calculator="true">
+                                    <input type="number" id="{{ $item->rowId }}"  name="numb[{{$key}}]" value="{{$item->qty}}" min="1" class="form-control order-2">
+                                    <a href="#" class="vk-calculator__button vk-btn vk-btn--minus order-1"
+                                       data-index="minus">
+                                        <i class="_icon fa fa-minus"></i>
+                                    </a>
+                                    <a href="#" class="vk-calculator__button vk-btn vk-btn--plus order-3" data-index="plus">
+                                        <i class="_icon fa fa-plus"></i>
+                                    </a>
+                                </div> <!--./calculator-->
+                            </div> <!--./vk-shopcart__quantity-->
+                        </td>
+                        <td>
+                        <span class="vk-shopcart__price vk-text--red-1">
+                            <span class="d-lg-none">Thành tiền: </span>{{number_format($item->price * $item->qty)}} đ</span>
+                        </td>
+                        <td>
+                            <div class="vk-button">
+                                <a href="{{url('xoa-gio-hang/'.$item->rowId)}}" id="{{$item->rowId}}" class="vk-btn vk-btn--del vk-btn--grey-2 "><i class="ti-trash mr-2"></i> Xóa</a>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </table>
+                <div class="vk-shopcart__button">
+                    <div>
+                        <a href="{{url('thanh-toan')}}" title="" class="vk-btn vk-btn--grey-6">Thanh toán</a>
+                        <button class="vk-btn vk-btn--grey-6">Cập nhật</button>
+                        <!-- <a href="#" title="" class="vk-btn vk-btn--outline-grey-6">Xóa giỏ hàng</a> -->
+                    </div>
+                    <div class="vk-shopcart__total">
+                        <div class="vk-shopcart__label">Tạm tính: </div>
+                        <div class="vk-text--red-2">{{number_format($total)}} VNĐ</div>
+                    </div>
+
+                </div>
+                <a href="{{url('')}}" class="vk-btn vk-btn--link pl-0"><i class="fa fa-caret-right mr-2"></i> Mua thêm sản phẩm khác</a>
+
+            </div>
+        </form>
+            <!-- /.container -->
+        </div> <!--./vk-shopcart-->
+
+
+    </div> <!--./vk-page-->
+    <div class="vk-map">
+        <div class="vk-map__img">
+            <img src="{{ asset('public/images/map.jpg')}}" alt="">
+        </div>
+
+        <div class="vk-map__main">
+            <div class="container">
+                <div class="vk-map__wrapper">
+                    <div class="vk-map__content">
+                        <h2 class="vk-map__title">HỆ THỐNG CỦA HÀNG VIDCOM</h2>
+                        <div class="vk-map__text">
+                            Vidcom hiện đang sở hữu hệ thống 16 Siêu thị Nội Thất và Trang Trí tại hai thành phố chính của
+                            Việt Nam là Hà Nội và TP.Hồ Chí Minh.
+                        </div>
+                        <a href="{{url('cua-hang')}}" class="vk-btn vk-btn--white vk-map__btn">Xem hệ thống cửa hàng</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<!-- cart-main-area start -->
-<div class="cart-main-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <form action="{{route('updateCart')}}" method="post" id="cartformpage">   
-                    <input type="hidden" name="_token" value="{{csrf_token()}}" >            
-                    <div class="table-content table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th class="product-thumbnail">Hình ảnh</th>
-                                    <th class="product-name">Tên</th>
-                                    <th class="product-price">Giá</th>
-                                    <th class="product-quantity">Số lượng</th>
-                                    <th class="product-subtotal">Tổng</th>
-                                    <th class="product-remove">Xóa</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($product_cart as $key=>$product)
-                                <tr>
-                                    <td class="product-thumbnail"><a href="#"><img src="{{asset('upload/product/'.$product->options->photo)}}" alt="{{$product->name}}" /></a></td>
-                                    <td class="product-name"><a href="#">{{$product->name}}</a></td>
-                                    <td class="product-price"><span class="amount">{{number_format($product->price)}}</span></td>
-                                    <td class="product-quantity">
-                                        <input type="number" class="tc item-quantity" min="0" value="{{$product->qty}}" id="{{ $product->rowId }}"  name="numb[{{$key}}]">
-                                    </td>
-                                    <td class="product-subtotal">{{number_format($product->price * $product->qty)}}</td>
-                                    <td class="product-remove">
-                                        <a id="{{$product->rowId}}" href="{{url('xoa-gio-hang/'.$product->rowId)}}"><i class="fa fa-times"></i></a>
-                                    </td>
+    </div> <!--./map-->
 
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8 col-sm-7 col-xs-12">
-                            <div class="buttons-cart">
-                                <input type="submit" value="Cập nhật" />
-                                <a href="{{url('san-pham')}}">Tiếp tục mua hàng</a>
-                            </div>
-
-                        </div>
-                        <div class="col-md-4 col-sm-5 col-xs-12">
-                            <div class="cart_totals">
-                                <h2>Đơn hàng</h2>
-                                <div class="clearfix"></div>
-                                <table>
-                                    <tbody>
-                                        <tr class="order-total">
-                                            <th>Tổng</th>
-                                            <td>
-                                                <strong><span class="amount">{{number_format($total)}}</span></strong>
-                                            </td>
-                                        </tr>                                           
-                                    </tbody>
-                                </table>
-                                <div class="clearfix"></div>
-                                <div class="wc-proceed-to-checkout">
-                                    <a href="{{url('thanh-toan')}}">Thanh toán</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form> 
-            </div>
-        </div>
-    </div>
-</div>
+</section>
 
 @endsection

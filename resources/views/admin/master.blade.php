@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{ url('public/admin_assets/plugins/datatables/dataTables.bootstrap.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ url('public/admin_assets/dist/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url('public/admin_assets/dist/css/slimselect.min.css') }}">
+    <link rel="stylesheet" href="{{ url('public/admin_assets/plugins/iCheck/all.css')}}">
     <link rel="stylesheet" href="{{ url('public/admin_assets/dist/css/AdminLTE.min.css') }}">
 
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -30,7 +32,7 @@
     <!-- jQuery 2.1.4 -->
     <script src="{{ url('public/admin_assets/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-
+   <script src="{{ url('public/admin_assets/plugins/iCheck/icheck.min.js')}}"></script>
     <!-- CK Editor -->
     <script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
     <script src="{{ asset('public/admin_assets/plugins/ckeditor/ckeditor.js') }}"></script>
@@ -136,12 +138,8 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ url('public/admin_assets/dist/js/demo.js') }}"></script>
     <script src="{{ url('public/admin_assets/dist/js/myscript.js') }}"></script>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <script src="{{ url('public/admin_assets/dist/js/slimselect.min.js') }}"></script>
+    
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">

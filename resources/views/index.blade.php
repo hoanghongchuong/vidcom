@@ -36,6 +36,7 @@
     <link href="{{ asset('public/plugin/mmenu/jquery.mmenu.all.css')}}" rel="stylesheet" />
     <link href="{{ asset('public/plugin/slick/slick.css')}}" rel="stylesheet" />
     <link href="{{ asset('public/css/style.css')}}" rel="stylesheet" />
+    <link href="{{ asset('public/css/customize.css')}}" rel="stylesheet" />
     <noscript id="deferred-styles">
         <link href="{{ asset('public/plugin/fonts/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" />
         <link href="{{ asset('public/plugin/fonts/themify-icons/themify-icons.css')}}" rel="stylesheet" />

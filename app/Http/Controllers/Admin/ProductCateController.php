@@ -40,11 +40,11 @@ class ProductCateController extends Controller {
         $cate->keyword = $request->txtKeyword;
         $cate->description = $request->description;
         $cate->stt = $request->stt;
-        // if($request->noibat=='on'){
-        //     $product_cate->noibat = 1;
-        // }else{
-        //     $product_cate->noibat = 0;
-        // }
+        if($request->noibat=='on'){
+            $product_cate->noibat = 1;
+        }else{
+            $product_cate->noibat = 0;
+        }
         if($request->status=='on'){
             $cate->status = 1;
         }else{

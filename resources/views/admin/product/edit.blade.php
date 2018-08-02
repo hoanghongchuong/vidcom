@@ -75,28 +75,52 @@
 								      	<label for="ten">Giá bán</label>
 								      	<input type="text" name="txtPrice" onkeyup="FormatNumber(this);"  onKeyPress="return isNumberKey(event)" value="{{ number_format($data->price,0,'',',') }}"  class="form-control" />
 									</div>
+									<div class="form-group">
+								      	<label for="ten">Giá cũ</label>
+								      	<input type="text" name="txtPriceOld" onkeyup="FormatNumber(this);"  onKeyPress="return isNumberKey(event)" value="{{ number_format($data->price_old,0,'',',') }}"  class="form-control" />
+									</div>
 									<!-- <div class="form-group">
 								      	<label for="alias">Ghi chú</label>
 								      	
 								      	<textarea name="txtHuongdan" rows="5" id="txtContent" class="form-control">{{ $data->huongdan }}</textarea>
 									</div> -->
-									
+									<style>
+										.list-color{
+											/*display: inline-block;*/
+											float: left;
+											width:50px;
+											margin-right: 10px;
+										}
+										.list-color span{
+											display: table-cell;
+										    width: 43px;
+										    height: 34px;
+										    padding: 0px 20px;
+										    margin-right: 5px;
+										}
+										
+										.box-color{
+											padding-right: 20px;
+										}
+									</style>
+									<div class="form-group">
+										<p><label for="">Chọn màu:</label></p>
+											@foreach($colors as $color)
+											<div class="input-group list-color">
+						                      <div class="input-group-addon box-color">
+												
+						                        <input type="checkbox" name="colors[]" value="{{$color->id}}" @if(in_array($color->id, $color_product)) checked="" @endif class="minimal">
+						                       
+						                      </div>
+						                      <span style="background-color: {{$color->code}};"></span>
+						                    </div>											
+											@endforeach
+									</div>
 								</div>
 								<div class="col-md-6 col-xs-12">
-									
-									<!-- 
-									<div class="form-group">
-								      	<label for="ten">Giá cũ</label>
-								      	<input type="text" name="txtPriceOld" onkeyup="FormatNumber(this);"  onKeyPress="return isNumberKey(event)" value="{{ number_format($data->price_old,0,'',',') }}"  class="form-control" />
-									</div> -->
 									<!-- <div class="form-group">
 								      	<label for="ten">Mã SP</label>
 								      	<input type="text" name="txtCode"  value="{{ $data->code }}"  class="form-control" />
-									</div> -->
-									
-									<!-- <div class="form-group">
-								      	<label for="ten">Giá cũ</label>
-								      	<input type="text" name="txtPriceOld" onkeyup="FormatNumber(this);"  onKeyPress="return isNumberKey(event)" value="{{ number_format($data->price_old,0,'',',') }}"  class="form-control" />
 									</div> -->
 									<div class="form-group">
 								      	<label for="desc">Mô tả</label>
@@ -182,7 +206,7 @@
 	            </div>
 	            <div class="clearfix"></div>
 			    <div class="col-md-6">
-			    	<div class="form-group hidden">
+			    	<div class="form-group">
 					      <label for="ten">Số thứ tự</label>
 					      <input type="number" min="1" name="stt" value="{!! isset($data->status) ? $data->stt : (count($product)+1) !!}" class="form-control" style="width: 100px;">
 				    </div>

@@ -78,29 +78,59 @@
 								      	<label for="ten">Giá bán</label>
 								      	<input type="text" name="txtPrice"  onkeyup="FormatNumber(this);"  onKeyPress="return isNumberKey(event)" value=""  class="form-control" />
 									</div>
-									<!-- <div class="form-group">
+									<div class="form-group">
 								      	<label for="ten">Giá cũ</label>
 								      	<input type="text" name="txtPriceOld"  onkeyup="FormatNumber(this);"  onKeyPress="return isNumberKey(event)" value=""  class="form-control" />
-									</div> -->
+									</div>
+									
+									<style>
+										.list-color{
+											/*display: inline-block;*/
+											float: left;
+											width:50px;
+											margin-right: 10px;
+										}
+										.list-color span{
+											display: table-cell;
+										    width: 43px;
+										    height: 34px;
+										    padding: 0px 20px;
+										    margin-right: 5px;
+										}
+										
+										.box-color{
+											padding-right: 20px;
+										}
+									</style>
+									<div class="form-group">
+										<p><label for="">Chọn màu:</label></p>
+											@foreach($colors as $color)
+											<div class="input-group list-color">
+						                      <div class="input-group-addon box-color">
+						                        <input type="checkbox" name="colors[]" value="{{$color->id}}" class="minimal">
+						                      </div>
+						                      <span style="background-color: {{$color->code}};"></span>
+						                    </div>											
+											@endforeach
+									</div>
 									<!-- <div class="form-group">
 								      	<label for="alias">Ghi chú</label>
 								      	<textarea name="txtHuongdan" rows="5" id="txtContent" class="form-control"></textarea>
 									</div> -->
 								</div>
+								<div class="col-md-6 col-xs-12">
+									<div class="form-group">
+								      	<label for="desc">Mô tả</label>
+								      	<textarea name="txtDesc" rows="5" id="txtContent" class="form-control"></textarea>
+									</div>
+								</div>
 								
 							</div>
-							<div class="col-md-6 col-xs-12">
-
-								
+							<div class="col-md-6 col-xs-12">								
 								<!-- <div class="form-group">
 							      	<label for="ten">Mã SP</label>
 							      	<input type="text" name="txtCode"  value=""  class="form-control" />
-								</div> -->
-
-								<div class="form-group">
-							      	<label for="desc">Mô tả</label>
-							      	<textarea name="txtDesc" rows="5" id="txtContent" class="form-control"></textarea>
-								</div>
+								</div> -->							
 								
 							</div>
 							
@@ -147,7 +177,7 @@
 	            </div>
 	            <div class="clearfix"></div>
 			    <div class="col-md-6">
-			    	<div class="form-group hidden">
+			    	<div class="form-group">
 					      <label for="ten">Số thứ tự</label>
 					      <input type="number" min="1" name="stt" value="{!! count($data)+1 !!}" class="form-control" style="width: 100px;">
 				    </div>
@@ -187,5 +217,12 @@
     </div><!-- /.box -->
     
 </section><!-- /.content -->
-
+<script>
+	$(document).ready(function(){
+		$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+          checkboxClass: 'icheckbox_minimal-blue',
+          radioClass: 'iradio_minimal-blue'
+        });
+	});
+</script>
 @endsection()

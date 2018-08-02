@@ -10,9 +10,11 @@
           <ul class="treeview-menu">
             <li><a href="backend/productcate"><i class="fa fa-circle-o"></i> <span>Danh mục sản phẩm</span></a></li>
             <li><a href="backend/product"><i class="fa fa-circle-o"></i> <span>Sản phẩm</span></a></li>
+            <li><a href="backend/color"><i class="fa fa-circle-o"></i> <span>Quản lý màu sắc</span></a></li>
             <!-- <li><a href="backend/about/edit?type=san-pham"><i class="fa fa-th"></i> <span>Giới thiệu sản phẩm</span></a></li> -->
           </ul>
         </li>
+
         <li class="treeview ">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Về Vidcom</span> <i class="fa fa-angle-left pull-right"></i>
@@ -42,10 +44,8 @@
             <!-- <li><a href="backend/position"><i class="fa fa-gear" aria-hidden="true"></i> <span>Vị trí quảng cáo</span></a></li> -->
           </ul>
         </li>
-        <li><a href="{{ asset('backend/setting') }}"><i class="fa fa-gear" aria-hidden="true"></i> <span>Quản lý thiết lập</span></a></li>
-        <!-- <li><a href="backend/bankaccount"><i class="fa fa-envelope"></i><span>Quản lý tài khoản ngân hàng</span></a></li> -->
-        
-        
+        <li><a href="backend/bankaccount"><i class="fa fa-envelope"></i><span>Quản lý tài khoản ngân hàng</span></a></li>
+        <li><a href="{{ asset('backend/setting') }}"><i class="fa fa-gear" aria-hidden="true"></i> <span>Quản lý thiết lập</span></a></li>        
         
       </ul>
     </section>

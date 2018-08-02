@@ -94,15 +94,15 @@
 		                    	</div>
 	                    	</div>
 	                    	<div class="clearfix"></div>
-	                	</div><!-- /.tab-pane -->
-	                </div><!-- /.tab-content -->
+	                	</div>
+	                </div>
 	            </div>
 	            <div class="clearfix"></div>
 			    <div class="col-md-6">
-			    	<!-- <div class="form-group">
+			    	<div class="form-group">
 					      <label for="ten">Số thứ tự</label>
-					      <input type="number" min="1" name="stt" value="{!! isset($data->status) ? $data->stt : (count($parent)+1) !!}" class="form-control" style="width: 100px;">
-				    </div> -->
+					      <input type="number" min="1" name="stt" value="{!! isset($data->stt) ? $data->stt : (count($parent)+1) !!}" class="form-control" style="width: 100px;">
+				    </div>
 				    <div class="form-group">
 					    <label>
 				        	<input type="checkbox" name="noibat" {!! (!isset($data->noibat) || $data->noibat==1)?'checked="checked"':'' !!}> Nổi bật

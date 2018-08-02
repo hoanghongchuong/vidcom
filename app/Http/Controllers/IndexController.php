@@ -90,24 +90,18 @@ class IndexController extends Controller {
 	 */
 	public function index()
 	{
-		
-		$about = DB::table('about')->where('com','gioi-thieu')->first();
-		
-		$partners = DB::table('partner')->where('status',1)->orderBy('id','desc')->get();
-		$slogans = DB::table('slogan')->orderBy('stt','asc')->get();
-		$feedback = DB::table('feedback')->orderBy('id','desc')->get();
+		$productHot = DB::table('products')->where('status',1)->where('noibat',1)->take(8)->orderBy('stt','asc')->get();
 		$news = DB::table('news')->where('status',1)->where('noibat',1)->where('com','tin-tuc')->take(20)->orderBy('id','desc')->get();
-		
+		$products = DB::table('products')->where('status',1)->take(20)->orderBy('id','desc')->get();
+		$categories = DB::table('product_categories')->where('status',1)->where('noibat',1)->take(4)->orderBy('stt','asc')->get();
 		$setting = Cache::get('setting');
 		$title = $setting->title;
 		$keyword = $setting->keyword;
-		$description = $setting->description;
-		$whys = DB::table('lienket')->where('com','taisao')->orderBy('stt','asc')->get();
+		$description = $setting->description;		
 		$com = 'index';
 		// End cấu hình SEO
 		$img_share = asset('upload/hinhanh/'.$setting->photo);
-
-		return view('templates.index_tpl', compact('com','about','tintuc_moinhat','keyword','description','title','img_share','slider','news','partners','slogans','whys'));
+		return view('templates.index_tpl', compact('com','keyword','description','title','img_share','productHot','products','categories'));
 	}
 	public function getProduct(Request $req)
 	{
@@ -197,13 +191,11 @@ class IndexController extends Controller {
 		if(!empty($product_detail)){
 			$banner_danhmuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','san-pham')->get()->first();
 			// $product_khac = DB::table('products')->select()->where('status',1)->where('alias','<>',$id)->orderby('stt','desc')->take(8)->get();
-			$album_hinh = DB::table('images')->select()->where('product_id',$product_detail->id)->orderby('id','asc')->get();
-			
+			$album_hinh = DB::table('images')->select()->where('product_id',$product_detail->id)->orderby('id','asc')->get();			
 			$cateProduct = DB::table('product_categories')->select('name','alias')->where('id',$product_detail->cate_id)->first();
-			$productSameCate = DB::table('products')->select()->where('status',1)->where('alias','<>',$id)->where('cate_id',$product_detail->cate_id)->orderby('stt','desc')->take(4)->get();
-			// dd($productSameCate);
-			$setting = Cache::get('setting');
-			$productSale = DB::table('products')->select()->where('status',1)->where('spbc',1)->orderBy('id','desc')->take(4)->get();
+			$productSameCate = DB::table('products')->select()->where('status',1)->where('id','<>',$product_detail->id)->where('cate_id',$product_detail->cate_id)->orderby('stt','desc')->take(20)->get();			
+			$colorId = explode(',', $product_detail->color_id);
+			$colors = DB::table('colors')->whereIn('id', $colorId)->get();
 			$tintucs = DB::table('news')->orderBy('id','desc')->take(3)->get();
 			// Cấu hình SEO
 			if(!empty($product_detail->title)){
@@ -216,7 +208,7 @@ class IndexController extends Controller {
 			$img_share = asset('upload/product/'.$product_detail->photo);
 
 			// End cấu hình SEO
-			return view('templates.product_detail_tpl', compact('product_detail','banner_danhmuc','keyword','description','title','img_share','product_khac','album_hinh','cateProduct','productSameCate','tintucs','cate_pro','productSale'));
+			return view('templates.product_detail_tpl', compact('product_detail','banner_danhmuc','keyword','description','title','img_share','product_khac','album_hinh','cateProduct','productSameCate','tintucs','cate_pro','colors'));
 		}else{
 			return redirect()->route('getErrorNotFount');
 		}
@@ -441,17 +433,18 @@ class IndexController extends Controller {
 
 	public function addCart(Request $req)
 	{
-		$data = $req->only('product_id','product_numb');
+		$data = $req->only('product_id','product_numb', 'color');
 		$product = DB::table('products')->select()->where('status',1)->where('id',$data['product_id'])->first();
 		if (!$product) {
 			die('product not found');
 		}
+		// dd($data['product_numb']);
 		Cart::add(array(
 				'id'=>$product->id,
 				'name'=>$product->name,
 				'qty'=>$data['product_numb'],
 				'price'=>$product->price,
-				'options'=>array('photo'=>$product->photo,'code'=>$product->code)));
+				'options'=>array('photo'=>$product->photo,'color'=>$data['color'])));
 		return redirect(route('getCart'));
 	}
 	public function addCartAjax(Request $req)
