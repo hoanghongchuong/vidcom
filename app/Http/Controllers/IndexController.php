@@ -7,7 +7,7 @@ use App\Products;
 use App\ProductCate;
 use App\NewsLetter;
 use App\Recruitment;
-use DB,Cache,Mail;
+use DB,Cache,Mail, Session;
 use Cart;
 use App\Campaign;
 use App\Bill;
@@ -65,7 +65,7 @@ class IndexController extends Controller {
 	 */
 	public function __construct()
 	{
-		
+		session_start();
     	$setting = DB::table('setting')->select()->where('id',1)->get()->first();
     	$menu_top = DB::table('menu')->select()->where('com','menu-top')->where('status',1)->orderBy('stt','asc')->get();
     	$dichvu = DB::table('news')->select()->where('status',1)->where('com','dich-vu')->orderBy('stt','asc')->get();
@@ -105,25 +105,23 @@ class IndexController extends Controller {
 	}
 	public function getProduct(Request $req)
 	{
-		$cate_pro = DB::table('product_categories')->where('status',1)->where('parent_id',0)->orderby('id','asc')->get();
+		$cate_pro = DB::table('product_categories')->where('status',1)->where('parent_id',0)->orderby('stt','asc')->get();
 		$productSale = DB::table('products')->select()->where('status',1)->where('spbc',1)->orderBy('id','desc')->take(6)->get();
-		$products = DB::table('products')->select()->where('status', 1);
-		$appends = [];
-		$selected = $req->sort;
-		if ($req->sort) {
-			if (isset($this->sortType[$req->sort])) {
-				$appends['sort'] = $req->sort;
-				$products = $products->orderBy($this->sortType[$req->sort]['order'][0], $this->sortType[$req->sort]['order'][1]);
-			}
-		}
-		$products = $products->paginate(9);
-		if (count($appends)) {
-			$products = $products->appends($appends);
-		}
-		$tintucs = DB::table('news')->where('com','tin-tuc')->orderBy('id','desc')->take(3)->get();
-		$setting = Cache::get('setting');
-		$com='san-pham';
+
+		// $products = DB::table('products')->select()->where('status', 1);
+		// $appends = [];
+		// $selected = $req->sort;
+		// if ($req->sort) {
+		// 	if (isset($this->sortType[$req->sort])) {
+		// 		$appends['sort'] = $req->sort;
+		// 		$products = $products->orderBy($this->sortType[$req->sort]['order'][0], $this->sortType[$req->sort]['order'][1]);
+		// 	}
+		// }
+		// if (count($appends)) {
+		// 	$products = $products->appends($appends);
+		// }
 		
+		$com='san-pham';		
 		$title = "Sản phẩm";
 		$keyword = "Sản phẩm";
 		$description = "Sản phẩm";
@@ -134,46 +132,50 @@ class IndexController extends Controller {
 		return view('templates.product_tpl', compact('title','keyword','description','products', 'com','cate_pro','tintucs','selected','productSale'));
 	}
 
+	public function session_product()
+	{
+		
+	}
+
 	public function getProductList($id, Request $req)
 	{
-		//Tìm article thông qua mã id tương ứng
-		$cate_pro = DB::table('product_categories')->where('status',1)->orderby('id','asc')->get();
-		$com='d';
-		$productSale = DB::table('products')->select()->where('status',1)->where('spbc',1)->orderBy('id','desc')->take(6)->get();
-		$product_cate = DB::table('product_categories')->select()->where('status',1)->where('alias',$id)->get()->first();
-		if(!empty($product_cate)){
-			// $products = DB::table('products')->select()->where('status',1)->where('cate_id',$product_cate->id)->orderBy('stt','asc')->paginate(20);
-			$products = DB::table('products')->select()->where('status', 1)->where('cate_id',$product_cate->id);
-			$appends = [];
-			$selected = $req->sort;
-			if ($req->sort) {
-				if (isset($this->sortType[$req->sort])) {
-					$appends['sort'] = $req->sort;
-					$products = $products->orderBy($this->sortType[$req->sort]['order'][0], $this->sortType[$req->sort]['order'][1]);
-				}
-			}
-			$products = $products->paginate(9);
-			if (count($appends)) {
-				$products = $products->appends($appends);
-			}
-			$banner_danhmuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','san-pham')->get()->first();
-			$doitac = DB::table('lienket')->select()->where('status',1)->where('com','doi-tac')->orderby('stt','asc')->get();
-			$tintucs = DB::table('news')->orderBy('id','desc')->take(3)->get();
-			$cateChilds = DB::table('product_categories')->where('parent_id',$product_cate->id)->get();
-			$setting = Cache::get('setting');
-			if(!empty($product_cate->title)){
-				$title = $product_cate->title;
-			}else{
-				$title = $product_cate->name;
-			}
-			$keyword = $product_cate->keyword;
-			$description = $product_cate->description;
-			$img_share = asset('upload/product/'.$product_cate->photo);
-			view()->share(['sortType' => $this->sortType]);
-			return view('templates.productlist_tpl', compact('products','product_cate','banner_danhmuc','doitac','keyword','description','title','img_share','cate_pro','tintucs','cateChilds','com','productSale','selected'));
-		}else{
-			return redirect()->route('getErrorNotFount');
-		}
+		
+		
+		$cate_pro = DB::table('product_categories')->where('status',1)->where('parent_id',0)->orderby('id','asc')->get();
+		$colors = DB::table('colors')->get();
+        $com = 'san-pham';
+        $product_cate = ProductCate::select('*')->where('status', 1)->where('alias', $id)->first();        
+        if (!empty($product_cate)) {            
+        	$cate_parent = DB::table('product_categories')->where('id', $product_cate->parent_id)->first();
+
+        	$cateChilds = DB::table('product_categories')->where('parent_id', $product_cate->id)->get();
+        	
+        	$array_cate[] = $product_cate->id;
+        	if($cateChilds){
+        		foreach($cateChilds as $cate){
+        			$array_cate[] = $cate->id;
+        		}
+        	}        	
+        	Session::forget('product.countItem');
+        	if(!Session::has('product.countItem')){
+	            session()->put('product.countItem',9);
+	        } 
+	        $count_page = session()->get('product.countItem');
+	        
+        	$products = DB::table('products')->where('status', 1)->whereIn('cate_id', $array_cate)->paginate($count_page);
+            
+            if (!empty($product_cate->title)) {
+                $title = $product_cate->title;
+            } else {
+                $title = $product_cate->name;
+            }
+            $keyword = $product_cate->keyword;
+            $description = $product_cate->description;
+            $img_share = asset('upload/product/' . $product_cate->photo);
+            return view('templates.productlist_tpl', compact('products', 'product_cate', 'doitac', 'keyword', 'description', 'title', 'img_share', 'cate_pro', 'cate_parent', 'com', 'colors'));
+        } else {
+            return redirect()->route('getErrorNotFount');
+        }
 	}
 
 	public function getProductChild($alias){
@@ -526,10 +528,10 @@ class IndexController extends Controller {
     	$bill->full_name = $req->full_name;
     	$bill->email = $req->email;
     	$bill->phone = $req->phone;
-    	$bill->note = $req->note;
+    	$bill->note = $req->content;
     	$bill->address = $req->address;
     	$bill->payment = (int)($req->payment_method);
-    	$bill->province = $req->province;
+    	// $bill->province = $req->province;
     	// $bill->district = $req->district;
     	$total = $this->getTotalPrice();
     	$bill->total = $total;
@@ -550,11 +552,12 @@ class IndexController extends Controller {
     			'product_numb' => $key->qty,
     			'product_price' => $key->price,
     			'product_img' => $key->options->photo,
-    			'product_code' => $key->options->code
+    			'product_code' => $key->options->color
     		];
-    	}
-    	    	
+    	}    	    	
     	$bill->detail = json_encode($detail);
+
+    	// dd($bill);
     	if($total > 0){
     		$bill->save();
     	}
@@ -563,8 +566,7 @@ class IndexController extends Controller {
 				alert('Giỏ hàng của bạn rỗng!');
 				window.location = '".url('/')."' 
 			</script>";
-    	}
-    	
+    	}    	
     	Cart::destroy();
 
     	echo "<script type='text/javascript'>
@@ -645,4 +647,23 @@ class IndexController extends Controller {
 		return view('templates.catalog', compact('catalog'));
 	}
 
+	public function newProduct()
+	{
+		$cate_pro = DB::table('product_categories')->where('status',1)->where('parent_id',0)->orderby('id','asc')->get();
+		$colors = DB::table('colors')->get();
+		$products = DB::table('products')->where('status',1)->orderBy('id','desc')->paginate(3);
+		return view('templates.hangmoi', compact('cate_pro', 'colors', 'products'));
+	}
+	public function productSelling()
+	{
+		$cate_pro = DB::table('product_categories')->where('status',1)->where('parent_id',0)->orderby('id','asc')->get();
+		$colors = DB::table('colors')->get();
+		$products = DB::table('products')->where('status',1)->where('spbc',1)->orderBy('id','desc')->paginate(9);
+		return view('templates.banchay', compact('cate_pro', 'colors', 'products'));
+	}
+
+	public function productFilder(Request $req)
+	{
+
+	}
 }

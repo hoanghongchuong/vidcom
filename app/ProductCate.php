@@ -7,14 +7,12 @@ class ProductCate extends Model {
 	protected $table='product_categories';
 
 	protected $fillable = ['id','name','alias','photo','parent_id','stt','level','status','title','keyword','description'];
-
 	public $timestamps = true;
 	public function getProductsAttribute()
     {
     	$categoryIdArray = $this->getChildCategories([$this->id]);
-        return \App\Products::whereIn('cate_id', $categoryIdArray)->paginate(8);
+        return \App\Products::whereIn('cate_id', $categoryIdArray)->paginate(2);
     }
-
 
     protected function getChildCategories($categoryArray = [])
     {

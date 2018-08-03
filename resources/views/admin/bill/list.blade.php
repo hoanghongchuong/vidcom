@@ -77,7 +77,7 @@
                     if($item->payment == 1) echo"Chuyển khoản qua ngân hàng";
                   ?>
                 </td>
-                <td>{{ date($item->created_at) }}</td>
+                <td>{{ date('d/m/Y H:i:s', strtotime($item->created_at)) }}</td>
                 <td>
                   <?php
                       

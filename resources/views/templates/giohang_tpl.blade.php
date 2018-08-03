@@ -41,7 +41,7 @@
                                     <div class="vk-shopcart-item__color color-cart">
                                     <?php $color = DB::table('colors')->where('id', $item->options->color)->first(); ?>
                                         <!-- <span>Màu sắc </span> -->
-                                        <span style="background: {{ $color->code }}; width: 30px; height: 30px; border-radius: 50%"></span>
+                                        <span style="background: {{ @$color->code }}; width: 30px; height: 30px; border-radius: 50%"></span>
                                     </div>
                                 </div>
                             </div> <!--./vk-shopcart-item-->

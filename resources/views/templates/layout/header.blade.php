@@ -1,6 +1,6 @@
 <?php
     $setting = Cache::get('setting');
-    
+    $categories = DB::table('product_categories')->where('status',1)->where('parent_id',0)->get();
 ?>
 <header class="vk-header" data-layout="sticky">
     <div class="vk-header__top">
@@ -36,32 +36,28 @@
                     <ul class="vk-list vk-list--inline vk-menu vk-menu--main">
                         <li class="vk-list__item"><a href="{{url('')}}">Trang chủ</a></li>
                         <li class="vk-list__item">
-                            <a href="shop-list.html">Phòng</a>
+                            <a href="{{url('san-pham')}}">Phòng</a>
                             <ul class="vk-menu vk-menu--child vk-list vk-list--inline">
+                                @foreach($categories as $category)
                                 <li class="vk-list__item">
-                                    <a href="shop.html">Phòng ngủ</a>
+                                    <a href="{{ url('san-pham/'.$category->alias) }}">{{$category->name}}</a>
+                                    <?php $cateChilds = DB::table('product_categories')->where('status',1)->where('parent_id', $category->id)->get(); ?>
+                                    @if($cateChilds)
                                     <ul class="vk-menu vk-menu--child vk-list vk-list--inline">
-                                        <li class="vk-list__item"><a href="shop.html">Gương</a></li>
-                                        <li class="vk-list__item"><a href="shop.html">Kệ sảnh</a></li>
-                                        <li class="vk-list__item"><a href="shop.html">Đèn</a></li>
-                                        <li class="vk-list__item"><a href="shop.html">Thảm trang trí</a></li>
-                                        <li class="vk-list__item"><a href="shop.html">Nội thất sảnh</a></li>
-
+                                        @foreach($cateChilds as $cate)
+                                        <li class="vk-list__item"><a href="{{ url('san-pham/'.$cate->alias) }}">{{$cate->name}}</a></li>
+                                        @endforeach
                                     </ul>
+                                    @endif
                                 </li>
-                                <li class="vk-list__item"><a href="shop.html">Phòng khách</a></li>
-                                <li class="vk-list__item"><a href="shop.html">Phòng ăn</a></li>
-                                <li class="vk-list__item"><a href="shop.html">Phòng học & làn việc</a></li>
-                                <li class="vk-list__item"><a href="shop.html">Phòng tắm</a></li>
-                                <li class="vk-list__item"><a href="shop.html">Nhà Bếp</a></li>
-                                <li class="vk-list__item"><a href="shop.html">Sảnh & lối vào</a></li>
-                                <li class="vk-list__item"><a href="shop.html">Phòng trẻ em</a></li>
+                                @endforeach
+                                
                             </ul>
                         </li>
-                        <li class="vk-list__item"><a href="shop.html">Hàng mới về</a></li>
+                        <li class="vk-list__item"><a href="{{ url('hang-moi-ve') }}">Hàng mới về</a></li>
                         <li class="vk-list__item"><a href="{{url('gioi-thieu')}}">Về VIDCOM</a></li>
                         <li class="vk-list__item"><a href="{{url('catalog')}}">CATALOG 2018</a></li>
-                        <li class="vk-list__item"><a href="shop.html">Bán chạy nhất</a></li>
+                        <li class="vk-list__item"><a href="{{url('ban-chay')}}">Bán chạy nhất</a></li>
                     </ul>
                 </nav> <!--./menu-->
 

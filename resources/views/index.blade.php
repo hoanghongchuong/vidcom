@@ -35,6 +35,7 @@
     <link href="{{ asset('public/plugin/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" />
     <link href="{{ asset('public/plugin/mmenu/jquery.mmenu.all.css')}}" rel="stylesheet" />
     <link href="{{ asset('public/plugin/slick/slick.css')}}" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <link href="{{ asset('public/css/style.css')}}" rel="stylesheet" />
     <link href="{{ asset('public/css/customize.css')}}" rel="stylesheet" />
     <noscript id="deferred-styles">
@@ -42,12 +43,14 @@
         <link href="{{ asset('public/plugin/fonts/themify-icons/themify-icons.css')}}" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
     </noscript>
-    
+    <script src="{{ asset('public/plugin/jquery/jquery-3.2.1.min.js')}}"></script>
         <script type="text/javascript">
             function baseUrl(){
                 return '<?php echo url('/'); ?>';
             }
+
             window.token = '{{ csrf_token() }}';
+            window.urlAddCart = '{{ route("addProductToCartAjax") }}';
             window.loadmore = '{{ route("loadmoreProject") }}';
        </script>
 </head>
@@ -84,7 +87,7 @@
     else window.addEventListener('load', loadDeferredStyles);
     </script>
     <!-- BEGIN: SCRIPT -->
-    <script src="{{ asset('public/plugin/jquery/jquery-3.2.1.min.js')}}" defer></script>
+    
     <script src="{{ asset('public/plugin/jquery/jquery-migrate-3.0.0.min.js')}}" defer></script>
     <script src="{{ asset('public/plugin/popper/popper.min.js')}}" defer></script>
     <script src="{{ asset('public/plugin/jquery-ui/jquery-ui.min.js')}}" defer></script>
@@ -93,7 +96,9 @@
     <script src="{{ asset('public/plugin/slick/slick.min.js')}}" defer></script>
     <script src="{{ asset('public/plugin/scrollup/jquery.scrollUp.min.js')}}" defer></script>
     <script src="{{ asset('public/plugin/stickOnScroll/jquery.stickOnScroll.min.js')}}" defer></script>
-
-    <script src="{{ asset('public/plugin/main.min.js')}}" defer></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <!-- <script src="{{ asset('public/plugin/main.min.js')}}" defer></script> -->
+    <script src="{{ asset('public/plugin/main.js')}}" defer></script>
+    <script src="{{ asset('public/plugin/custom.js')}}" defer></script>
 </body>
 </html>

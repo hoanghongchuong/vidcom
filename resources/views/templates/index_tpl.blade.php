@@ -57,31 +57,25 @@ $sliders = DB::table('slider')->select()->where('status',1)->where('com','gioi-t
                 <div class="_item col-lg-6">
                     <a href="shop.html" class="vk-cate-item vk-cate-item--style-1" title="Sofa <br> Ghế phòng khách">
                         <div class="vk-img vk-img--cover">
-                            <img src="images/cat-1.jpg" alt="">
+                            <img src="{{ asset('public/images/cat-1.jpg')}}" alt="">
                         </div>
                         <div class="vk-cate-item__brief">
-
                             <div class="vk-box  vk-box--style-2">
                                 <h3 class="vk-box__title">
                                     Sofa <br> Ghế phòng khách
                                     <span class="vk-btn vk-btn--grey-7">Xem ngay </span>
                                 </h3>
-
-
                             </div>
                         </div>
                     </a>
                 </div>
 
                 <div class="col-lg-6">
-
                     <div class="row _h100">
-
-
                         <div class="_item col-lg-12 _h50">
                             <a href="shop.html" class="vk-cate-item vk-cate-item--style-2" title="Kệ trang trí">
                                 <div class="vk-img vk-img--cover">
-                                    <img src="images/cat-2.jpg" alt="">
+                                    <img src="{{ asset('public/images/cat-2.jpg')}}" alt="">
                                 </div>
                                 <div class="vk-cate-item__brief">
 
@@ -96,11 +90,10 @@ $sliders = DB::table('slider')->select()->where('status',1)->where('com','gioi-t
                                 </div>
                             </a>
                         </div>
-
                         <div class="_item col-lg-12 _h50">
                             <a href="shop.html" class="vk-cate-item vk-cate-item--style-2" title="Lưu trữ nhà bếp">
                                 <div class="vk-img vk-img--cover">
-                                    <img src="images/cat-3.jpg" alt="">
+                                    <img src="{{ asset('public/images/cat-3.jpg')}}" alt="">
                                 </div>
                                 <div class="vk-cate-item__brief">
 

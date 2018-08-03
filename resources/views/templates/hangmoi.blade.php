@@ -10,11 +10,9 @@
         <nav class="container">
             <ul class="vk-list vk-list--inline vk-breadcrumb__list">
                 <li class="vk-list__item"><a href="{{url('')}}"><i class="vk-icon fa fa-home"></i> Trang chủ</a></li>
-                <li class="vk-list__item"><a href="{{url('san-pham')}}">Phòng</a></li>
-                @if($cate_parent)
-                <li class="vk-list__item"><a href="{{url('san-pham/', $cate_parent->alias)}}">{{$cate_parent->name}}</a></li>
-                @endif
-                <li class="vk-list__item active">{{$product_cate->name}}</li>
+                <li class="vk-list__item"><a href="#">Hàng mới về</a></li>
+               
+                
             </ul>
         </nav>
     </div>
@@ -72,7 +70,7 @@
             </div> <!--./col-->
             <div class="col-lg-9 order-0 order-lg-1">
                 <div class="vk-banner vk-banner--style-2">
-                    <h1 class="vk-banner__title">{{$product_cate->name}}</h1>
+                    <h1 class="vk-banner__title">Hàng mới về</h1>
                 </div> <!--./banner-->
                 <div class="vk-filter">
                     <div class="vk-filter__item">
@@ -87,7 +85,7 @@
 
                     <div class="vk-filter__item">
                         <span class="mr-2">Sắp xếp sản phẩm</span>                        
-                        <select name="" class="sort_price" id="product_filter" class="form-control">
+                        <select name="" id="product_filter" class="form-control">
                             <option value="">Giá cao đến thấp</option>
                             <option value="">Giá cao đến thấp</option>
                            
@@ -120,6 +118,7 @@
                     </div>
                 @endforeach                    
                 </div>
+
                 <nav class="vk-pagination">
                     {!! $products->links() !!}
                     <!-- <ul class="vk-list vk-list--inline vk-pagination__list">

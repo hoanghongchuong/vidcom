@@ -64,10 +64,10 @@
 								      	<label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {!! $errors->first('txtAlias'); !!}</label>
 								      	@endif
 									</div>
-									<div class="form-group">
+									<!-- <div class="form-group">
 										<label for="">Mô tả</label>
 										<textarea name="description" rows="5" id="txtContent" class="form-control"></textarea>
-									</div>
+									</div> -->
 								</div>
 							</div>
 							<div class="clearfix"></div>

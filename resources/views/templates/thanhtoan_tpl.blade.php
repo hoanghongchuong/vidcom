@@ -49,11 +49,11 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <input type="text" placeholder="Địa chỉ" required="" class="form-control">
+                                    <input type="text" placeholder="Địa chỉ" name="address" required="" class="form-control">
                                 </div>
                             </div> <!--./col-->
                         </div><!--./row-->
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <select class="form-control">
@@ -72,7 +72,7 @@
                                     </select>
                                 </div>
                             </div> 
-                        </div>
+                        </div> -->
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
@@ -87,12 +87,15 @@
                                 </div>
                             </div> <!--./col-->
                         </div><!--./row-->
-                    </div> <!--./box-->
+                    </div>                    
                     <div class="vk-checkout__box vk-checkout__method">
                         <h2 class="vk-checkout__title vk-heading vk-heading--style-2">Phương thức thanh toán</h2>
-                        <div class="nav vk-nav vk-nav--style-1" id="method" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link active" data-toggle="pill" href="#cod" role="tab"> Chuyển khoản qua ngân hàng</a>
-                            <a class="nav-link" data-toggle="pill" href="#bank_transfer" role="tab">Thanh toán khi nhận hàng(COD)</a>
+
+                        <input type="hidden" name="payment_method" value="1" id="payment_method">
+                        
+                        <div class="nav vk-nav vk-nav--style-1 listValuePayment" id="method" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link active" data-id="1" data-toggle="pill" href="#cod" role="tab"> Chuyển khoản qua ngân hàng</a>
+                            <a class="nav-link" data-id="0" data-toggle="pill" href="#bank_transfer" role="tab">Thanh toán khi nhận hàng(COD)</a>
                         </div>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="cod" role="tabpanel">
@@ -105,7 +108,7 @@
                                     </div>
                                     <div class="tab-content">
                                     @foreach($bank as $k=>$b)
-                                        <div class="tab-pane show active " id="bank{{$k}}" role="tabpanel">
+                                        <div class="tab-pane show @if($k ==0)active @endif" id="bank{{$k}}" role="tabpanel">
                                             <div class="vk-bank-item">
                                                 <h3 class="vk-bank-item__title">Thông tin tài khoản</h3>
                                                 {!! $b->info !!}
@@ -113,7 +116,6 @@
                                         </div>
                                     @endforeach    
                                     </div>
-
                                 </div> <!--./bank-->
                             </div>
                             <div class="tab-pane fade" id="bank_transfer" role="tabpanel">
@@ -122,7 +124,6 @@
                             </div>
                         </div>
                     </div> <!--./box-->
-
                     <div class="vk-checkout__button">
                         <a href="{{url('gio-hang')}}" class="vk-btn vk-btn--outline-grey-6"><i class="fa fa-arrow-left mr-2"></i> Giỏ hàng</a>
                         <!-- <a href="shopcart.html" class="vk-btn vk-btn--grey-6">Hoàn tất</a> -->

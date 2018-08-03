@@ -14,7 +14,7 @@
             <!-- <li><a href="backend/about/edit?type=san-pham"><i class="fa fa-th"></i> <span>Giới thiệu sản phẩm</span></a></li> -->
           </ul>
         </li>
-
+        <li><a href="backend/orders"><i class="fa fa-shopping-cart"></i> <span>Quản lý đơn hàng</span></a></li>
         <li class="treeview ">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Về Vidcom</span> <i class="fa fa-angle-left pull-right"></i>

@@ -4,74 +4,53 @@
     $setting = Cache::get('setting');
     $about = Cache::get('about');
 ?>
-<div id="content">
-    <div class="page-title-wrap page-title-wrap-bg" style="background-image: url({{asset('public/images/bg-title.jpg')}});">
-    <div class="page-title-overlay"></div>
-        <div class="container">
-            <div class="page-title-inner block-center">
-                <div class="block-center-inner">
-                    <h1>Danh mục</h1>
-                    <ul class="breadcrumbs breadcrumbs-left">
-                        <!-- <li class="first">You are here:</li> -->
-                        <li class="home">
-                            <span>
-                                <a rel="v:url" href="#" class="home">
-                                    <span>Trang chủ</span>
-                                </a>
-                            </span>
-                        </li>
-                        <li>
-                            <span>Sản phẩm</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+<section class="vk-content">
+    <div class="vk-breadcrumb">
+        <nav class="container">
+            <ul class="vk-list vk-list--inline vk-breadcrumb__list">
+                <li class="vk-list__item"><a href="{{url('')}}"><i class="vk-icon fa fa-home"></i> Trang chủ</a></li>
+
+                <li class="vk-list__item active">Phòng</li>
+            </ul>
+        </nav>
     </div>
-    <div class="site-content-archive">
-        <div class="container clearfix">
-            <div class="row clearfix">
-                <div class="sidebar left-sidebar col-md-3">
-                    <aside id="search-2" class="widget widget_search">
-                        <form class="search-form" method="get" id="searchform" action=""> 
-                            <input type="text" value="" name="s" id="s" placeholder="Search..."> 
-                            <button type="submit"><i class="fa fa-search"></i></button>
-                        </form>
-                    </aside>
-
-                    <aside id="categories-2" class="widget widget_categories">
-                        <h4 class="widget-title"><span>Danh mục sản phẩm</span></h4>
-                            <ul>
-                                @foreach($cate_pro as $cate)
-                                <li class="cat-item">
-                                    <a href="{{url('san-pham/'.$cate->alias)}}">{{ $cate->name }}</a>
-                                </li>
-                                @endforeach
-
-                            </ul>
-                    </aside>
-                </div>
-                <div class="site-content-archive-inner col-md-9">
-                    <div class="row">
-                        @foreach($products as $item)
-                        <div class="col-sm-4 col-md-4 col-lg-4">
-                            <div class="p-block">
-                                <a href="{{url('san-pham/'.$item->alias.'.html')}}">
-                                    <img src="{{asset('upload/product/'.$item->photo)}}" alt="">
-                                    <div class="p-desc">
-                                        <p class="p-name">{{ $item->name }}</p>
-                                        <!-- <p>Hiện đại, ưu tín</p> -->
-                                    </div>  
-                                </a>
-                            </div>
-                        </div>
-                        @endforeach
-                       
+    <!--./vk-breadcrumb-->
+    <div class="container">
+        <div class="vk-shop__list row">
+        @foreach($cate_pro as $cate)
+            <div class="col-sm-6 col-lg-4 _item">
+                <div class="vk-shop-item vk-shop-item--style-2">
+                    <a href="{{ url('san-pham/'.$cate->alias) }}" title="{{$cate->name}}" class="vk-img vk-img--cover ">
+                        <img src="{{asset('upload/product/'.$cate->photo)}}" alt="{{$cate->name}}" class="vk-img__img">
+                    </a>
+                    <div class="vk-shop-item__brief">
+                        <h3 class="vk-shop-item__title"><a href="{{ url('san-pham/'.$cate->alias) }}" title="{{$cate->name}}">{{$cate->name}}</a></h3>
                     </div>
-                    <div class="row"> <div class="paginations">{!! $products->links() !!}</div></div>
+                </div>
+            </div>
+        @endforeach
+            
+        </div> <!--./list-->
+    </div> <!--./container-->
+    <div class="vk-map">
+        <div class="vk-map__img">
+            <img src="{{ asset('public/images/map.jpg')}}" alt="">
+        </div>
+        <div class="vk-map__main">
+            <div class="container">
+                <div class="vk-map__wrapper">
+                    <div class="vk-map__content">
+                        <h2 class="vk-map__title">HỆ THỐNG CỦA HÀNG VIDCOM</h2>
+                        <div class="vk-map__text">
+                            Vidcom hiện đang sở hữu hệ thống 16 Siêu thị Nội Thất và Trang Trí tại hai thành phố chính của
+                            Việt Nam là Hà Nội và TP.Hồ Chí Minh.
+                        </div>
+                        <a href="{{url('')}}" class="vk-btn vk-btn--white vk-map__btn">Xem hệ thống cửa hàng</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </div> <!--./map-->
+
+</section>
 @endsection

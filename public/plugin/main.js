@@ -873,8 +873,8 @@ var PriceRange = function () {
         $(slider_range).slider({
             range: true,
             min: 0,
-            max: 1000,
-            values: [59, 799],
+            max: 10000000,
+            values: [0, 10000000],
             slide: function (event, ui) {
                 $(amount1).val(ui.values[0]);
                 $(amount2).val(ui.values[1]);
@@ -885,34 +885,23 @@ var PriceRange = function () {
         });
         $(amount1).val($(slider_range).slider("values", 0));
         $(amount2).val($(slider_range).slider("values", 1));
-
         $(text_amount1).text($(slider_range).slider("values", 0));
         $(text_amount2).text($(slider_range).slider("values", 1));
-
-
     };
-
     return {
         init: function () {
             _initInstances();
         }
     };
 }();
-
 // calculator quantity
 var CalcQuantity = function () {
     var _initInstances = function () {
-
         $("[data-calculator] .vk-btn").on("click", function () {
-
             var $button = $(this);
-
             var oldValue = $button.siblings("input").val();
-
             if ($button.attr('data-index') == "plus") {
-
                 var newVal = parseFloat(oldValue) + 1;
-
             } else {
                 // Don't allow decrementing below zero
                 if (oldValue > 1) {
@@ -921,13 +910,10 @@ var CalcQuantity = function () {
                     newVal = 1;
                 }
             }
-
             $button.siblings("input").val(newVal);
-
             return false;
         });
     };
-
     return {
         init: function () {
             _initInstances();

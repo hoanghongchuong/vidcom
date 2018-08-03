@@ -34,6 +34,12 @@ Route::get('san-pham/{alias}.html','IndexController@getProductDetail')->name('de
 Route::get('san-pham/{id}',['as'=>'getProductList', 'uses'=>'IndexController@getProductList']);
 Route::get('danh-muc/{alias}', 'IndexController@getProductByCate')->name('detailCategory');
 
+Route::get('hang-moi-ve', 'IndexController@newProduct');
+Route::get('ban-chay', 'IndexController@productSelling');
+
+Route::get('product/filter', 'IndexController@productFilder')->name('product.filter');
+
+
 Route::get('thanh-toan',['as'=>'thanhtoan', 'uses' => 'IndexController@thanhtoan']);
 // Route::get('danh-muc/{alias}',['as'=>'getProductChild', 'uses'=>'IndexController@getProductChild']);
 
