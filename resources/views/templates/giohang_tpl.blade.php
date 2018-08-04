@@ -47,8 +47,10 @@
                             </div> <!--./vk-shopcart-item-->
                         </td>
                         <td>
-                        <span class="vk-shopcart__price vk-text--red-1"><span
-                                class="d-lg-none">Giá: </span>{{ number_format($item->price) }} đ</span>
+                        <span class="vk-shopcart__price vk-text--red-1">
+                            <span class="d-lg-none">Giá: </span>
+                                {{ number_format($item->price) }} đ
+                        </span>
                         </td>
                         <td>
                             <div class="vk-shopcart__quantity">

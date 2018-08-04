@@ -3,9 +3,7 @@
 <?php
     $setting = Cache::get('setting');
     $banner = DB::table('banner_content')->where('position', 8)->first();
-
 ?>
-
 
 <main class="index">
     <section class="about">

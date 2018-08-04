@@ -51,7 +51,6 @@
                                     @endif
                                 </li>
                                 @endforeach
-                                
                             </ul>
                         </li>
                         <li class="vk-list__item"><a href="{{ url('hang-moi-ve') }}">Hàng mới về</a></li>
@@ -60,7 +59,6 @@
                         <li class="vk-list__item"><a href="{{url('ban-chay')}}">Bán chạy nhất</a></li>
                     </ul>
                 </nav> <!--./menu-->
-
                 <div class="vk-header__bot-right">
                     <a href="#searchForm" class="vk-btn vk-header__btn-search vk-btn--grey-2" id="btnSearchFornShow"><i class="ti-search"></i></a>
                     <div class="vk-header__search" id="searchForm">
@@ -71,22 +69,12 @@
                             </div>
                         </form>
                     </div> <!--./search-->
-
                     <div class="vk-header__minicart vk-header__minicart--mid">
                         <a href="{{url('gio-hang')}}" class="vk-btn vk-header__btn-cart vk-btn--grey-2"><img src="{{ asset('public/images/icon-1.png')}}" alt=""></a>
                     </div> <!--./minicart-->
                     <a href="#menu" class="vk-btn vk-header__btn-menu vk-btn--grey-2 d-lg-none"><i class="ti-menu"></i></a>
-
-
-
-
                 </div> <!--./right-->
-
-
             </div> <!--./content-->
-
         </div> <!--./container-->
-
     </div> <!--./bot-->
-
 </header>
