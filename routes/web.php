@@ -27,7 +27,7 @@ Route::get('catalog', 'IndexController@catalog')->name('catalog');
 Route::get('loadmore/project','IndexController@loadmoreProject')->name('loadmoreProject');
 
 
-Route::get('tim-kiem',['as'=>'searchNews', 'uses'=>'IndexController@search']);
+Route::get('tim-kiem',['as'=>'search', 'uses'=>'IndexController@search']);
 Route::post('newsletter',['as'=>'postNewsletter', 'uses'=>'IndexController@postNewsletter']);
 Route::get('san-pham',['as'=>'getProduct', 'uses'=>'IndexController@getProduct']);
 Route::get('san-pham/{alias}.html','IndexController@getProductDetail')->name('detailProduct');

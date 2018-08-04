@@ -234,17 +234,18 @@ class IndexController extends Controller {
 	public function search(Request $request)
 	{
 		$search = $request->txtSearch;
-		
+		$com = 'tim-kiem';
+		$cate_pro = DB::table('product_categories')->where('status',1)->where('parent_id',0)->orderby('id','asc')->get();
 		// Cấu hình SEO
 		$title = "Tìm kiếm: ".$search;
 		$keyword = "Tìm kiếm: ".$search;
 		$description = "Tìm kiếm: ".$search;
 		$img_share = '';		
-		$news = DB::table('news')->select()->where('name', 'LIKE', '%' . $search . '%')
-		->whereIn('com',['kien-truc', 'noi-that','phong-thuy','du-an'])
+		$data = DB::table('products')->where('name', 'LIKE', '%' . $search . '%')
+		->where('status',1)
 		->orderBy('id','DESC')->get();
-		
-		return view('templates.search_tpl', compact('news','keyword','description','title','img_share','search'));
+		// dd($data);
+		return view('templates.search_tpl', compact('data','keyword','description','title','img_share','search','com','cate_pro'));
 	}
 
 	public function getNews()

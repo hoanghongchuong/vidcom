@@ -64,10 +64,12 @@
                 <div class="vk-header__bot-right">
                     <a href="#searchForm" class="vk-btn vk-header__btn-search vk-btn--grey-2" id="btnSearchFornShow"><i class="ti-search"></i></a>
                     <div class="vk-header__search" id="searchForm">
-                        <div class="vk-form vk-form--search">
-                            <input type="text" class="form-control" placeholder="Tìm kiếm">
-                            <button class="vk-btn vk-btn--grey-2"><i class="ti-search"></i></button>
-                        </div>
+                        <form action="{{ route('search') }}" method="get">
+                            <div class="vk-form vk-form--search">
+                                <input type="text" class="form-control" name="txtSearch" placeholder="Tìm kiếm">
+                                <button class="vk-btn vk-btn--grey-2"><i class="ti-search"></i></button>
+                            </div>
+                        </form>
                     </div> <!--./search-->
 
                     <div class="vk-header__minicart vk-header__minicart--mid">
