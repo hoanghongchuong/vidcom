@@ -97,12 +97,12 @@
                 @foreach($products as $item)
                     <div class="col-sm-6 col-md-4 _item">
                         <div class="vk-shop-item vk-shop-item--style-3">
-                            <a href="url('san-pham/'.$item->alias.'.html')" title="{{$item->name}}" class="vk-img vk-img--mw100 ">
+                            <a href="{{url('san-pham/'.$item->alias.'.html')}}" title="{{$item->name}}" class="vk-img vk-img--mw100 ">
                                 <img src="{{asset('upload/product/'.$item->photo)}}" alt="{{$item->name}}" class="vk-img__img">
                                 <span class="_sale">- {{ round(100-($item->price / $item->price_old)*100) }} %</span>
                             </a>
                             <div class="vk-shop-item__brief">
-                                <h3 class="vk-shop-item__title"><a href="url('san-pham/'.$item->alias.'.html')" title="{{$item->name}}">{{$item->name}}</a></h3>
+                                <h3 class="vk-shop-item__title"><a href="{{url('san-pham/'.$item->alias.'.html')}}" title="{{$item->name}}">{{$item->name}}</a></h3>
                                 <div class="vk-shop-item__price">{{number_format($item->price)}} đ 
                                     @if($item->price < $item->price_old)
                                     <span class="_old">{{number_format($item->price_old)}} đ</span>
@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="vk-shop-item__button">
                                     <a href="javascript:;" data-id="{{$item->id}}" class="btn-addcartx vk-btn vk-btn--grey-1" title="Thêm vào giỏ"><img src="{{ asset('public/images/icon-3.png')}}" alt=""></a>
-                                    <a href="url('san-pham/'.$item->alias.'.html')" class="vk-btn vk-btn--grey-1" title="Xem thêm"><i class="ti-search"></i></a>
+                                    <a href="{{url('san-pham/'.$item->alias.'.html')}}" class="vk-btn vk-btn--grey-1" title="Xem thêm"><i class="ti-search"></i></a>
                                 </div>
                             </div>
                         </div>

@@ -56,7 +56,7 @@
                         </li>
                         <li class="vk-list__item"><a href="{{ url('hang-moi-ve') }}">Hàng mới về</a></li>
                         <li class="vk-list__item"><a href="{{url('gioi-thieu')}}">Về VIDCOM</a></li>
-                        <li class="vk-list__item"><a href="{{url('catalog')}}">CATALOG 2018</a></li>
+                        <li class="vk-list__item"><a href="{{url('catalog')}}">CATALOG</a></li>
                         <li class="vk-list__item"><a href="{{url('ban-chay')}}">Bán chạy nhất</a></li>
                     </ul>
                 </nav> <!--./menu-->
