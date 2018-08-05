@@ -48,6 +48,17 @@ $(document).ready(function(){
     });
 
     //filter product
-  
+  $('.form-change').on('change', function(){
 
+        $('#filter_products').submit();
+  });
+
+  $('.btn-filter').click(function(){
+
+        $('#filter_products').submit();
+  });
+  $('.color-item').click(function(){
+    var color = $(this).data('color');
+    $('.set_color').val(color);
+  });
 });

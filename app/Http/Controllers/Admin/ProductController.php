@@ -98,10 +98,9 @@ class ProductController extends Controller
             $product->tinhtrang = 0;
         }
         $product->user_id = Auth::user()->id;
-        if(!empty($request->properties)){
-            $product->properties = implode('###',$request->properties);
-        }
-        $product->color_id = implode(',', $request->colors);
+       
+
+       $product->color_id = json_encode($request->colors, JSON_NUMERIC_CHECK);
         
         //     if(isset($_POST['number'])){
         //     $number = $_POST['number'];
@@ -173,8 +172,7 @@ class ProductController extends Controller
             $parent = ProductCate::orderBy('stt', 'asc')->get()->toArray();
             $product = Products::select('stt')->orderBy('id','asc')->get()->toArray();
             $product_img = Products::find($id)->pimg;
-            $color_product = explode(',', $data->color_id);
-            // dd($color_product);
+            $color_product =  json_decode($data->color_id);
             // Gọi view edit.blade.php hiển thị bải viết
             return view('admin.product.edit',compact('data','product','id','parent','product_img','colors', 'color_product'));
         }else{
@@ -258,8 +256,7 @@ class ProductController extends Controller
             $product->content = $request->txtContent;
             $product->keyword = $request->txtKeyword;
             $product->description = $request->txtDescription;
-
-            $product->color_id = implode(',', $request->colors);
+            $product->color_id = json_encode($request->colors, JSON_NUMERIC_CHECK);
             $product->stt = intval($request->stt);
 
             if($request->status=='on'){

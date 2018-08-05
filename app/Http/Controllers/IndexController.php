@@ -132,14 +132,8 @@ class IndexController extends Controller {
 		return view('templates.product_tpl', compact('title','keyword','description','products', 'com','cate_pro','tintucs','selected','productSale'));
 	}
 
-	public function session_product()
-	{
-		
-	}
-
 	public function getProductList($id, Request $req)
-	{
-		
+	{		
 		
 		$cate_pro = DB::table('product_categories')->where('status',1)->where('parent_id',0)->orderby('id','asc')->get();
 		$colors = DB::table('colors')->get();
@@ -156,13 +150,35 @@ class IndexController extends Controller {
         			$array_cate[] = $cate->id;
         		}
         	}        	
-        	Session::forget('product.countItem');
-        	if(!Session::has('product.countItem')){
-	            session()->put('product.countItem',9);
-	        } 
-	        $count_page = session()->get('product.countItem');
-	        
-        	$products = DB::table('products')->where('status', 1)->whereIn('cate_id', $array_cate)->paginate($count_page);
+        	
+        	
+    		$limit = $req->view ? $req->view : 1;
+    		$sort = $req->sort ? $req->sort : 'asc';
+    		
+    		$price_from = $req->from ? $req->from : 0;
+    		$price_to = $req->to ? $req->to : 10000000;
+        	
+        	$products = DB::table('products')
+        	->where('status', 1)
+        	->orderBy('price', $sort);
+
+        	$appends = [];
+        	if($req->isMethod('GET')){
+        		$products = $products->whereBetween('price', [ $price_from, $price_to])
+        		->where('color_id', 'like', '%' . $req->color . '%');
+        		$viewx  = $req->view;
+        		$sortx  = $req->sort;
+        		$colorx	= $req->color;
+        		$appends = [
+        			'from'  => $price_from,
+        			'to'    => $price_to,
+        			'color' => $colorx,
+        			'view'  => $viewx,
+        			'sort'  => $sortx
+        		];
+        	};
+
+        	$products = $products->whereIn('cate_id', $array_cate)->paginate($limit);
             
             if (!empty($product_cate->title)) {
                 $title = $product_cate->title;
@@ -172,7 +188,7 @@ class IndexController extends Controller {
             $keyword = $product_cate->keyword;
             $description = $product_cate->description;
             $img_share = asset('upload/product/' . $product_cate->photo);
-            return view('templates.productlist_tpl', compact('products', 'product_cate', 'doitac', 'keyword', 'description', 'title', 'img_share', 'cate_pro', 'cate_parent', 'com', 'colors'));
+            return view('templates.productlist_tpl', compact('products', 'product_cate', 'viewx', 'keyword', 'description', 'title', 'img_share', 'cate_pro', 'cate_parent', 'com', 'colors','sortx','price_from','price_to', 'appends', 'colorx'));
         } else {
             return redirect()->route('getErrorNotFount');
         }
@@ -196,8 +212,9 @@ class IndexController extends Controller {
 			$album_hinh = DB::table('images')->select()->where('product_id',$product_detail->id)->orderby('id','asc')->get();			
 			$cateProduct = DB::table('product_categories')->select('name','alias')->where('id',$product_detail->cate_id)->first();
 			$productSameCate = DB::table('products')->select()->where('status',1)->where('id','<>',$product_detail->id)->where('cate_id',$product_detail->cate_id)->orderby('stt','desc')->take(20)->get();			
-			$colorId = explode(',', $product_detail->color_id);
+			$colorId = json_decode($product_detail->color_id);
 			$colors = DB::table('colors')->whereIn('id', $colorId)->get();
+
 			$tintucs = DB::table('news')->orderBy('id','desc')->take(3)->get();
 			// Cấu hình SEO
 			if(!empty($product_detail->title)){
@@ -215,6 +232,8 @@ class IndexController extends Controller {
 			return redirect()->route('getErrorNotFount');
 		}
 	}
+
+
 	public function getAbout()
 	{
 		$about = DB::table('about')->where('com','gioi-thieu')->first();

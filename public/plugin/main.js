@@ -861,6 +861,8 @@ var ScrollToTop = function () {
 }();
 
 // price range
+var set_from = $('.set_from').val();
+var set_to = $('.set_to').val();
 var PriceRange = function () {
     var _initInstances = function () {
         var slider_range = '#slider-range';
@@ -874,19 +876,21 @@ var PriceRange = function () {
             range: true,
             min: 0,
             max: 10000000,
-            values: [0, 10000000],
+            values: [set_from, set_to],
             slide: function (event, ui) {
                 $(amount1).val(ui.values[0]);
                 $(amount2).val(ui.values[1]);
                 //
                 $(text_amount1).text(ui.values[0]);
                 $(text_amount2).text(ui.values[1]);
+
             }
         });
         $(amount1).val($(slider_range).slider("values", 0));
         $(amount2).val($(slider_range).slider("values", 1));
         $(text_amount1).text($(slider_range).slider("values", 0));
         $(text_amount2).text($(slider_range).slider("values", 1));
+
     };
     return {
         init: function () {
