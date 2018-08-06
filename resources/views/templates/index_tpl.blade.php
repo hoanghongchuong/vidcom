@@ -55,14 +55,14 @@ $sliders = DB::table('slider')->select()->where('status',1)->where('com','gioi-t
             <div class="row">
 
                 <div class="_item col-lg-6">
-                    <a href="shop.html" class="vk-cate-item vk-cate-item--style-1" title="Sofa <br> Ghế phòng khách">
+                    <a href="{{url('san-pham/'.@$category[0]->alias)}}" class="vk-cate-item vk-cate-item--style-1" title="Sofa <br> Ghế phòng khách">
                         <div class="vk-img vk-img--cover">
-                            <img src="{{ asset('public/images/cat-1.jpg')}}" alt="">
+                            <img src="{{ asset('upload/product/'.@$category[0]->photo)}}" alt="">
                         </div>
                         <div class="vk-cate-item__brief">
                             <div class="vk-box  vk-box--style-2">
                                 <h3 class="vk-box__title">
-                                    Sofa <br> Ghế phòng khách
+                                    {{@$category[0]->name}}
                                     <span class="vk-btn vk-btn--grey-7">Xem ngay </span>
                                 </h3>
                             </div>
@@ -73,37 +73,32 @@ $sliders = DB::table('slider')->select()->where('status',1)->where('com','gioi-t
                 <div class="col-lg-6">
                     <div class="row _h100">
                         <div class="_item col-lg-12 _h50">
-                            <a href="shop.html" class="vk-cate-item vk-cate-item--style-2" title="Kệ trang trí">
+                            <a href="{{url('san-pham/'.@$category[1]->alias)}}" class="vk-cate-item vk-cate-item--style-2" title="Kệ trang trí">
                                 <div class="vk-img vk-img--cover">
-                                    <img src="{{ asset('public/images/cat-2.jpg')}}" alt="">
+                                    <img src="{{ asset('upload/product/'.@$category[1]->photo)}}" alt="">
                                 </div>
                                 <div class="vk-cate-item__brief">
 
                                     <div class="vk-box  vk-box--style-2">
                                         <h3 class="vk-box__title">
-                                            Kệ trang trí
+                                            {{@$category[1]->name}}
                                             <span class="vk-btn vk-btn--grey-7">Xem ngay </span>
                                         </h3>
-
-
                                     </div>
                                 </div>
                             </a>
                         </div>
                         <div class="_item col-lg-12 _h50">
-                            <a href="shop.html" class="vk-cate-item vk-cate-item--style-2" title="Lưu trữ nhà bếp">
+                            <a href="{{url('san-pham/'.@$category[2]->alias)}}" class="vk-cate-item vk-cate-item--style-2" title="Lưu trữ nhà bếp">
                                 <div class="vk-img vk-img--cover">
-                                    <img src="{{ asset('public/images/cat-3.jpg')}}" alt="">
+                                    <img src="{{ asset('upload/product/'.@$category[2]->photo)}}" alt="">
                                 </div>
                                 <div class="vk-cate-item__brief">
-
                                     <div class="vk-box  vk-box--style-2">
                                         <h3 class="vk-box__title">
-                                            Lưu trữ nhà bếp
+                                            {{@$category[2]->name}}
                                             <span class="vk-btn vk-btn--grey-7">Xem ngay </span>
                                         </h3>
-
-
                                     </div>
                                 </div>
                             </a>

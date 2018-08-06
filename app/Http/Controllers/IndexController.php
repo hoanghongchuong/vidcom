@@ -94,6 +94,9 @@ class IndexController extends Controller {
 		$news = DB::table('news')->where('status',1)->where('noibat',1)->where('com','tin-tuc')->take(20)->orderBy('id','desc')->get();
 		$products = DB::table('products')->where('status',1)->take(20)->orderBy('id','desc')->get();
 		$categories = DB::table('product_categories')->where('status',1)->where('noibat',1)->take(4)->orderBy('stt','asc')->get();
+
+		$category = DB::table('product_categories')->where('status',1)->take(4)->orderBy('id','desc')->get();
+		// dd($category[0]);
 		$setting = Cache::get('setting');
 		$title = $setting->title;
 		$keyword = $setting->keyword;
@@ -101,7 +104,7 @@ class IndexController extends Controller {
 		$com = 'index';
 		// End cấu hình SEO
 		$img_share = asset('upload/hinhanh/'.$setting->photo);
-		return view('templates.index_tpl', compact('com','keyword','description','title','img_share','productHot','products','categories'));
+		return view('templates.index_tpl', compact('com','keyword','description','title','img_share','productHot','products','categories','category'));
 	}
 	public function getProduct(Request $req)
 	{
@@ -156,7 +159,7 @@ class IndexController extends Controller {
     		$sort = $req->sort ? $req->sort : 'asc';
     		
     		$price_from = $req->from ? $req->from : 0;
-    		$price_to = $req->to ? $req->to : 10000000;
+    		$price_to = $req->to ? $req->to : 100000000;
         	
         	$products = DB::table('products')
         	->where('status', 1)
@@ -667,23 +670,71 @@ class IndexController extends Controller {
 		return view('templates.catalog', compact('catalog'));
 	}
 
-	public function newProduct()
+	public function newProduct(Request $req)
 	{
 		$cate_pro = DB::table('product_categories')->where('status',1)->where('parent_id',0)->orderby('id','asc')->get();
 		$colors = DB::table('colors')->get();
-		$products = DB::table('products')->where('status',1)->orderBy('id','desc')->paginate(3);
-		return view('templates.hangmoi', compact('cate_pro', 'colors', 'products'));
+        $com = 'san-pham';
+        $products = DB::table('products')->where('status',1)->orderBy('id','desc');
+    		$limit = $req->view ? $req->view : 6;
+    		$sort = $req->sort ? $req->sort : 'asc';
+    		
+    		$price_from = $req->from ? $req->from : 0;
+    		$price_to = $req->to ? $req->to : 100000000;
+        	
+        	$products = DB::table('products')
+        	->where('status', 1)
+        	->orderBy('price', $sort);
+        	$appends = [];
+        	if($req->isMethod('GET')){
+        		$products = $products->whereBetween('price', [ $price_from, $price_to])
+        		->where('color_id', 'like', '%' . $req->color . '%');
+        		$viewx  = $req->view;
+        		$sortx  = $req->sort;
+        		$colorx	= $req->color;
+        		$appends = [
+        			'from'  => $price_from,
+        			'to'    => $price_to,
+        			'color' => $colorx,
+        			'view'  => $viewx,
+        			'sort'  => $sortx
+        		];
+        	};
+
+        	$products = $products->paginate($limit);		
+		return view('templates.hangmoi', compact('cate_pro', 'colors', 'products', 'price_from', 'price_to', 'viewx', 'sortx', 'colorx', 'appends'));
 	}
-	public function productSelling()
+	public function productSelling(Request $req)
 	{
 		$cate_pro = DB::table('product_categories')->where('status',1)->where('parent_id',0)->orderby('id','asc')->get();
 		$colors = DB::table('colors')->get();
-		$products = DB::table('products')->where('status',1)->where('spbc',1)->orderBy('id','desc')->paginate(9);
-		return view('templates.banchay', compact('cate_pro', 'colors', 'products'));
+        $com = 'san-pham';
+        $products = DB::table('products')->where('status',1)->orderBy('id','desc');
+    		$limit = $req->view ? $req->view : 6;
+    		$sort = $req->sort ? $req->sort : 'asc';    		
+    		$price_from = $req->from ? $req->from : 0;
+    		$price_to = $req->to ? $req->to : 100000000;        	
+        	$products = DB::table('products')
+        	->where('status', 1)
+        	->orderBy('price', $sort);
+        	$appends = [];
+        	if($req->isMethod('GET')){
+        		$products = $products->whereBetween('price', [ $price_from, $price_to])
+        		->where('color_id', 'like', '%' . $req->color . '%');
+        		$viewx  = $req->view;
+        		$sortx  = $req->sort;
+        		$colorx	= $req->color;
+        		$appends = [
+        			'from'  => $price_from,
+        			'to'    => $price_to,
+        			'color' => $colorx,
+        			'view'  => $viewx,
+        			'sort'  => $sortx
+        		];
+        	};
+        	$products = $products->paginate($limit);		
+		return view('templates.banchay', compact('cate_pro', 'colors', 'products', 'price_from', 'price_to', 'viewx', 'sortx', 'colorx', 'appends'));
 	}
 
-	public function productFilder(Request $req)
-	{
-
-	}
+	
 }

@@ -24,7 +24,6 @@
             <div class="row">
                 <div class="col-lg-3 order-1 order-lg-0 pt-5 pt-lg-0">
                     <div class="vk-sidebar">
-
                         <div class="vk-sidebar__box">
                             <h2 class="vk-sidebar__title vk-heading vk-heading--style-1 ">Danh mục</h2>
                             <ul class="vk-list vk-sidebar__list">
@@ -43,11 +42,9 @@
                                 </li>
                                 @endforeach
                             </ul>
-                        </div> 
-
-
+                        </div>
                         <input type="hidden" class="set_from" value="{{ $price_from ? $price_from : 0}}">
-                        <input type="hidden" class="set_to" value="{{ $price_to ? $price_to : 1000000}}">
+                        <input type="hidden" class="set_to" value="{{ $price_to ? $price_to : 100000000}}">
                         <div class="vk-sidebar__box">
                             <h2 class="vk-sidebar__title vk-heading vk-heading--style-1 mb-4">Khoảng giá</h2>
                             <div id="slider-range" class="form-change"></div>
@@ -84,9 +81,9 @@
                         <div class="vk-filter__item">
                             <span class="mr-1">Hiển thị</span>
                             <select name="view" id="" class="form-control form-change">
-                                <option value="1" {{ (isset($viewx) and $viewx == 1) ? 'selected' : ''}}>1</option>
-                                <option value="2" {{ (isset($viewx) and $viewx == 2) ? 'selected' : ''}}>2</option>
-                                <option value="3" {{ (isset($viewx) and $viewx == 3) ? 'selected' : ''}}>3</option>
+                                <option value="9" {{ (isset($viewx) and $viewx == 9) ? 'selected' : ''}}>9</option>
+                                <option value="12" {{ (isset($viewx) and $viewx == 12) ? 'selected' : ''}}>12</option>
+                                <option value="15" {{ (isset($viewx) and $viewx == 15) ? 'selected' : ''}}>15</option>
                             </select>
                             <span class="ml-1">Sản phẩm</span>
                         </div>
@@ -95,13 +92,11 @@
                             <span class="mr-2">Sắp xếp sản phẩm</span>                        
                             <select name="sort" id="product_filter" class="form-control form-change">
                                 <option value="asc" {{ (isset($sortx) and $sortx == 'asc') ? 'selected' : ''}}>Giá thấp đến cao</option>
-                                <option value="desc" {{ (isset($sortx) and $sortx == 'desc') ? 'selected' : ''}}>Giá cao đến thấp</option>
-                               
+                                <option value="desc" {{ (isset($sortx) and $sortx == 'desc') ? 'selected' : ''}}>Giá cao đến thấp</option>                               
                             </select>
                         </div>
 
                     </div> <!--./filter-->
-
                     <div class="vk-shop__list row">
                     @foreach($products as $item)
                         <div class="col-sm-6 col-md-4 _item">
@@ -127,25 +122,16 @@
                     @endforeach                    
                     </div>
                     <nav class="vk-pagination">
-                        {!! $products->appends($appends)->links() !!}
-                        <!-- <ul class="vk-list vk-list--inline vk-pagination__list">
-                            <li class="vk-list__item"><a href="#" title=""><i class="fa fa-angle-double-left"></i></a></li>
-                            <li class="vk-list__item active"><a href="#" title="">1</a></li>
-                            <li class="vk-list__item"><a href="#" title="">2</a></li>
-                            <li class="vk-list__item"><a href="#" title="">3</a></li>
-                            <li class="vk-list__item"><a href="#" title=""><i class="fa fa-angle-double-right"></i></a></li>
-                        </ul> -->
+                        {!! $products->appends($appends)->links() !!}                        
                     </nav>               
                 </div> 
             </div> 
         </form>
     </div> 
-
     <div class="vk-map">
         <div class="vk-map__img">
             <img src="{{ asset('public/images/map.jpg')}}" alt="">
         </div>
-
         <div class="vk-map__main">
             <div class="container">
                 <div class="vk-map__wrapper">

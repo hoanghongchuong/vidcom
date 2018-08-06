@@ -875,7 +875,7 @@ var PriceRange = function () {
         $(slider_range).slider({
             range: true,
             min: 0,
-            max: 10000000,
+            max: 100000000,
             values: [set_from, set_to],
             slide: function (event, ui) {
                 $(amount1).val(ui.values[0]);
