@@ -36,7 +36,7 @@
               </div>
               <div class="form-group">
                 <label for="">Mã màu</label>
-                <input type="text" name="code" required class="form-control" value="{{ $color->code }}">
+                <input type="color" name="code" required class="form-control" value="{{ $color->code }}">
 
               </div>
               <p style="margin-top: 20px;"><span style="background-color: {{ $color->code }}; width: 40px; height: 40px; display: block;"></span></p>

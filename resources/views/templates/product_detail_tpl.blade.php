@@ -3,6 +3,7 @@
 <?php
     $setting = Cache::get('setting');
     $about = Cache::get('about');
+    $quangcao = DB::table('lienket')->where('com','quang-cao')->get();
 ?>
 <section class="vk-content">
     <div class="vk-breadcrumb">
@@ -41,9 +42,7 @@
                             </div>
                             @endif
                         </div>
-
                     </div>
-
                     <div class="vk-shop-detail__thumbnail-slider">
                         <div class="vk-slider slider-nav">
                             @if(count($album_hinh) > 0)
@@ -61,8 +60,6 @@
                                 </div>
                             </div>
                             @endif
-
-
                         </div>
 
                     </div>
@@ -82,8 +79,7 @@
                         {!! $product_detail->mota !!}
                     </div>
                 <form action="{{ route('addProductToCart') }}" method="post">
-                    {{csrf_field()}}
-                    
+                    {{csrf_field()}}                    
                     <input type="hidden" value="{{ $product_detail->id }}" name="product_id">    
 
                     <div class="vk-shop-detail__color">
@@ -129,13 +125,12 @@
                     </div> <!--./description-->
                 </div> <!--./col-->
                 <div class="col-lg-3 pt-5 pt-lg-0">
+                    @foreach($quangcao as $qc)
                     <div class="vk-ads mb-3">
-                        <img src="{{ asset('public/images/ads-1.jpg')}}" alt="" class="mw-100">
+                        <img src="{{ asset('upload/hinhanh/'.$qc->photo)}}" alt="" class="mw-100">
                     </div>
-
-                    <div class="vk-ads mb-3">
-                        <img src="{{ asset('public/images/ads-2.jpg')}}" alt="" class="mw-100">
-                    </div>
+                    @endforeach
+                    
                 </div> <!--./col-->
             </div> <!--./row-->
 

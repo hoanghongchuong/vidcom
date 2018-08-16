@@ -48,9 +48,9 @@
               <tr>
                 <th style="width: 20px;"><input type="checkbox" name="chonhet" class="minimal" id="chonhet" /></th>
                 <th class="text-center with_dieuhuong">Stt</th>
-
+                @if($_GET['type']!='quang-cao')
                 <th>Tên bài viết</th>
-                
+                @endif
                 @if($_GET['type']!='catalog')
                 <th>Hình ảnh</th>
                 @endif
@@ -66,8 +66,9 @@
               <tr>
                 <td><input type="checkbox" name="chon" id="chon" value="{{$item->id}}" class="chon" /></td>
                 <td class="text-center with_dieuhuong">{{$k+1}}</td>
-
+                @if($_GET['type']!='quang-cao')
                 <td>{{$item->name}}</td>
+                @endif
                 @if($_GET['type']!='catalog')
                 <td><img src="{{ asset('upload/hinhanh/'.$item->photo) }}" onerror="this.src='{{ asset('public/admin_assets/images/no-image.jpg') }}';" class="img_product"  alt="NO PHOTO" /></td>
                 @endif

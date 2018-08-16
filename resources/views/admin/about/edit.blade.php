@@ -48,11 +48,12 @@
 								      	@endif
 									</div>
 									@endif
+									@if($_GET['type']!='gioi-thieu')
 							    	<div class="form-group">
 								      	<label for="ten">Tên</label>
 								      	<input type="text" name="txtName" id="txtName" value="{{ @$data->name }}"  class="form-control" />
 									</div>
-									
+									@endif
 									<!-- <div class="form-group hidden @if ($errors->first('txtAlias')!='') has-error @endif">
 								      	<label for="alias">Đường dẫn tĩnh</label>
 								      	<input type="text" name="txtAlias" id="txtAlias" value="{{ @$data->alias }}"  class="form-control" />

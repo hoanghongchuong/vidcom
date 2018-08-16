@@ -36,7 +36,7 @@
               </div>
               <div class="form-group">
                 <label for="">Mã màu</label>
-                <input type="text" name="code" required class="form-control" value="">
+                <input type="color" name="code" required class="form-control" value="">
               </div>
             </div>
             

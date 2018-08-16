@@ -3,7 +3,6 @@
 <?php
     $setting = Cache::get('setting');
     $cateProducts = Cache::get('cateProducts');
-    
 ?>
 <section class="vk-content">
     <div class="vk-breadcrumb">
@@ -62,15 +61,13 @@
                                 <input type="hidden" name="color"  value="{{$colorx}}" class="set_color">
                                 @foreach($colors as $color)
                                 <li class="vk-list__item color-item" data-color="{{$color->id}}">
-                                    <a href="javascript:;" class="_color1 form-change" style="background-color: {{$color->code}}"></a>
+                                    <a href="javascript:;" class="_color1 form-change" style="background-color: {{$color->code}}">                                        
+                                    </a>
                                 </li>
                                 @endforeach
                             </ul>
-
-                        </div> 
-                        
+                        </div>
                         <button class="btn-primary btn btn-filter" type="button">Lọc sản phẩm</button>
-
                     </div> <!--./sidebar-->
                 </div> <!--./col-->
                 <div class="col-lg-9 order-0 order-lg-1">

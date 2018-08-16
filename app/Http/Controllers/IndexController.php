@@ -155,7 +155,7 @@ class IndexController extends Controller {
         	}        	
         	
         	
-    		$limit = $req->view ? $req->view : 1;
+    		$limit = $req->view ? $req->view : 6;
     		$sort = $req->sort ? $req->sort : 'asc';
     		
     		$price_from = $req->from ? $req->from : 0;
@@ -606,6 +606,7 @@ class IndexController extends Controller {
     public function thanhtoan(){
     	$bank = DB::table('bank_account')->get();
     	$product_cart= Cart::content();
+    	// dd($product_cart);
     	$total = $this->getTotalPrice();
 		return view('templates.thanhtoan_tpl',compact('bank','product_cart','total'));
 	}

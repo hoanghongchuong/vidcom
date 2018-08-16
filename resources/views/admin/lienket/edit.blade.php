@@ -70,6 +70,7 @@
 						</div>
 						@endif
 						<div class="clearfix"></div>
+						@if($_GET['type']!='quang-cao')
 				    	<div class="form-group @if ($errors->first('txtName')!='') has-error @endif">
 					      	<label for="ten">Tên</label>
 					      	<input type="text" name="txtName" id="txtName" value="{{ $data->name }}"  class="form-control" />
@@ -77,7 +78,7 @@
 					      	<label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {!! $errors->first('txtName'); !!}</label>
 					      	@endif
 						</div>
-						
+						@endif
 						<!-- <div class="form-group">
 					      	<label for="alias">Link liên kết</label>
 					      	<input type="text" name="txtLink" id="txtLink" value="{{ $data->link }}"  class="form-control" />
@@ -87,6 +88,7 @@
 					      	<textarea name="txtDesc" rows="5" class="form-control">{{ $data->mota }}</textarea>
 						</div> -->						
 					</div>
+					@if($_GET['type']!='quang-cao')
 					<div class="col-md-12 col-xs-12">
 						<div class="box box-info">
 			                <div class="box-header">
@@ -99,9 +101,9 @@
 			                <div class="box-body pad">
 			        			<textarea name="txtContent" id="txtContent" cols="50" rows="5">{{ $data->content }}</textarea>
 			        		</div>
-			        	</div>
-			        	
+			        	</div>			        	
 					</div>
+					@endif
 					<input type="hidden" name="txtCom" value="{{ @$_GET['type'] }}"/>
 				</div>
 	            <div class="clearfix"></div>
