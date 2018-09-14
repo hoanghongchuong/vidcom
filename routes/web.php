@@ -26,6 +26,8 @@ Route::get('catalog', 'IndexController@catalog')->name('catalog');
 // Ajax load more project
 Route::get('loadmore/project','IndexController@loadmoreProject')->name('loadmoreProject');
 
+Route::get('ghtk/connect', 'ApiController@index')->name('ghtk.connect');
+
 
 Route::get('tim-kiem',['as'=>'search', 'uses'=>'IndexController@search']);
 Route::post('newsletter',['as'=>'postNewsletter', 'uses'=>'IndexController@postNewsletter']);
