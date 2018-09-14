@@ -204,15 +204,32 @@ class IndexController extends Controller {
 		return view('templates.productlist_level2', compact('tintucs','products'));
 	}
 	
-	public function getProductDetail($id)
+
+
+	public function setCookies(Request $req, $id)
+	{
+		$idCookie = $id;
+		$minutes = 1;
+		$id_cookie = cookie('id_cookie', $idCookie, $minutes);
+
+		return response()
+			->view('templates.product_detail_tpl')
+			->withCookie($id_cookie);
+	}
+
+	public function getProductDetail($id, Request $req)
 	{
         
         $cate_pro = DB::table('product_categories')->where('status',1)->orderby('id','asc')->get();
 		$product_detail = DB::table('products')->select()->where('status',1)->where('alias',$id)->get()->first();
 		if(!empty($product_detail)){
 			$banner_danhmuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','san-pham')->get()->first();
-			// $product_khac = DB::table('products')->select()->where('status',1)->where('alias','<>',$id)->orderby('stt','desc')->take(8)->get();
-			$album_hinh = DB::table('images')->select()->where('product_id',$product_detail->id)->orderby('id','asc')->get();			
+			// sản phẩm đã xem
+			$_SESSION['daxem'][$product_detail->id] = $product_detail->id;
+			$ids_session = $_SESSION['daxem'];
+			$productDaXem = DB::table('products')->whereIn('id', $ids_session)->where('status', 1)->get();
+
+			$album_hinh = DB::table('images')->select()->where('product_id',$product_detail->id)->orderby('id','asc')->get();		
 			$cateProduct = DB::table('product_categories')->select('name','alias')->where('id',$product_detail->cate_id)->first();
 			$productSameCate = DB::table('products')->select()->where('status',1)->where('id','<>',$product_detail->id)->where('cate_id',$product_detail->cate_id)->orderby('stt','desc')->take(20)->get();			
 			$colorId = json_decode($product_detail->color_id);
@@ -228,9 +245,9 @@ class IndexController extends Controller {
 			$keyword = $product_detail->keyword;
 			$description = $product_detail->description;
 			$img_share = asset('upload/product/'.$product_detail->photo);
-
+			
 			// End cấu hình SEO
-			return view('templates.product_detail_tpl', compact('product_detail','banner_danhmuc','keyword','description','title','img_share','product_khac','album_hinh','cateProduct','productSameCate','tintucs','cate_pro','colors'));
+			return view('templates.product_detail_tpl', compact('product_detail','banner_danhmuc','keyword','description','title','img_share','product_khac','album_hinh','cateProduct','productSameCate','tintucs','cate_pro','colors', 'productDaXem'));
 		}else{
 			return redirect()->route('getErrorNotFount');
 		}
